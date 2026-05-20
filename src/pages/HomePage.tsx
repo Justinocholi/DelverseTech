@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star, CheckCircle } from 'lucide-react';
+import { ArrowRight, Star } from 'lucide-react';
 import { useInView } from '../hooks/useInView';
 import { Page } from '../App';
 
