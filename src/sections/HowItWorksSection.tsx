@@ -3,9 +3,10 @@ import { motion } from 'framer-motion';
 import { useInView } from '../hooks/useInView';
 import { ArrowRight } from 'lucide-react';
 import { PROCESS_STEPS } from '../constants';
+import { Page } from '../App';
 
 interface HowItWorksSectionProps {
-  onNavigate: (id: string) => void;
+  onNavigate: (page: Page) => void;
 }
 
 const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({ onNavigate }) => {
@@ -166,7 +167,7 @@ const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({ onNavigate }) => 
         >
           <motion.button
             className="btn-primary"
-            onClick={() => onNavigate('contact')}
+            onClick={() => onNavigate('contact' as Page)}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >

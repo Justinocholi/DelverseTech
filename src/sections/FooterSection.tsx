@@ -1,10 +1,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Linkedin, Twitter, Github, Instagram, ArrowRight } from 'lucide-react';
-import { NAV_LINKS } from '../constants';
+import { Page } from '../App';
+
+const NAV_LINKS: { id: Page; label: string }[] = [
+  { id: 'home', label: 'Home' },
+  { id: 'services', label: 'Services' },
+  { id: 'technologies', label: 'Technologies' },
+  { id: 'portfolio', label: 'Portfolio' },
+  { id: 'about', label: 'About Us' },
+  { id: 'contact', label: 'Contact' },
+];
 
 interface FooterSectionProps {
-  onNavigate: (id: string) => void;
+  onNavigate: (page: Page) => void;
 }
 
 const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {

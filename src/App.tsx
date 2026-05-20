@@ -1,71 +1,39 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import './style.css';
 
 import Navbar from './components/Navbar';
-import HeroSection from './sections/HeroSection';
-import AboutSection from './sections/AboutSection';
-import ServicesSection from './sections/ServicesSection';
-import StatsSection from './sections/StatsSection';
-import HowItWorksSection from './sections/HowItWorksSection';
-import PortfolioSection from './sections/PortfolioSection';
-import TestimonialsSection from './sections/TestimonialsSection';
-import TeamSection from './sections/TeamSection';
-import ContactSection from './sections/ContactSection';
+import HomePage from './pages/HomePage';
+import ServicesPage from './pages/ServicesPage';
+import TechnologiesPage from './pages/TechnologiesPage';
+import PortfolioPage from './pages/PortfolioPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 import FooterSection from './sections/FooterSection';
 
-const SECTION_IDS = ['home', 'about', 'services', 'process', 'portfolio', 'testimonials', 'team', 'contact'];
+export type Page = 'home' | 'services' | 'technologies' | 'portfolio' | 'about' | 'contact';
 
 const App: React.FC = () => {
-  const [activeSection, setActiveSection] = useState('home');
+  const [currentPage, setCurrentPage] = useState<Page>('home');
 
-  // Track active section on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY + 100;
-
-      for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
-        const el = document.getElementById(SECTION_IDS[i]);
-        if (el && el.offsetTop <= scrollY) {
-          setActiveSection(SECTION_IDS[i]);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navigateTo = useCallback((id: string) => {
-    if (id === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    const el = document.getElementById(id);
-    if (el) {
-      const offset = 68; // navbar height
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
+  const navigate = useCallback((page: Page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   return (
     <div style={{ background: '#0a0f1e', minHeight: '100vh', overflowX: 'hidden' }}>
-      <Navbar activeSection={activeSection} onNavigate={navigateTo} />
+      <Navbar currentPage={currentPage} onNavigate={navigate} />
 
       <main>
-        <HeroSection onNavigate={navigateTo} />
-        <AboutSection />
-        <StatsSection />
-        <ServicesSection onNavigate={navigateTo} />
-        <HowItWorksSection onNavigate={navigateTo} />
-        <PortfolioSection />
-        <TestimonialsSection />
-        <TeamSection />
-        <ContactSection />
+        {currentPage === 'home'         && <HomePage onNavigate={navigate} />}
+        {currentPage === 'services'     && <ServicesPage onNavigate={navigate} />}
+        {currentPage === 'technologies' && <TechnologiesPage />}
+        {currentPage === 'portfolio'    && <PortfolioPage onNavigate={navigate} />}
+        {currentPage === 'about'        && <AboutPage onNavigate={navigate} />}
+        {currentPage === 'contact'      && <ContactPage />}
       </main>
 
-      <FooterSection onNavigate={navigateTo} />
+      <FooterSection onNavigate={navigate} />
     </div>
   );
 };

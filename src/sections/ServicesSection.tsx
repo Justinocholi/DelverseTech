@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useInView } from '../hooks/useInView';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import { SERVICES } from '../constants';
+import { Page } from '../App';
 
 interface ServiceCardProps {
   service: typeof SERVICES[0];
@@ -122,7 +123,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, inView, onCon
 };
 
 interface ServicesSectionProps {
-  onNavigate: (id: string) => void;
+  onNavigate: (page: Page) => void;
 }
 
 const ServicesSection: React.FC<ServicesSectionProps> = ({ onNavigate }) => {
@@ -189,7 +190,7 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ onNavigate }) => {
               service={service}
               index={i}
               inView={inView}
-              onContactClick={() => onNavigate('contact')}
+              onContactClick={() => onNavigate('contact' as Page)}
             />
           ))}
         </div>
@@ -206,7 +207,7 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ onNavigate }) => {
           </p>
           <motion.button
             className="btn-primary"
-            onClick={() => onNavigate('contact')}
+            onClick={() => onNavigate('contact' as Page)}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
